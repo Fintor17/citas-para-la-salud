@@ -24,7 +24,7 @@ class RegisteredUserController extends Controller
     }
 
     /**
-     * Handle an incoming registration request.
+     * Manejar una solicitud de registro entrante.
      *
      * @throws \Illuminate\Validation\ValidationException
      */

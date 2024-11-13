@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Registros;
+use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/usuarios';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -49,17 +49,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'Nombre_apellido' => ['required', 'string', 'max:255'],
-            'Edad' => ['required', 'integer'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:registros'],
-            'Sexo' => ['required', 'string'],
-            'Calle_num' => ['required', 'string'],
-            'Colonia' => ['required', 'string'],
-            'Codigo_postal' => ['required', 'integer'],
-            'Estado' => ['required', 'string'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'Telefono' => ['required', 'string'],
-            'Tipo_usuario' => ['required', 'string'],
         ]);
     }
 
@@ -71,19 +63,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return Registros::create([
-            'Nombre_apellido' => $data['Nombre_apellido'],
-            'Edad' => $data['Edad'],
+        return User::create([
+            'name' => $data['name'],
             'email' => $data['email'],
-            'Sexo' => $data['Sexo'],
-            'Calle_num' => $data['Calle_num'],
-            'Colonia' => $data['Colonia'],
-            'Codigo_postal' => $data['Codigo_postal'],
             'password' => Hash::make($data['password']),
-            'Estado' => $data['Estado'],
-            'Telefono' => $data['Telefono'],
-            'Tipo_usuario' => $data['Tipo_usuario'],
-
         ]);
     }
 }

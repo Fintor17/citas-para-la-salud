@@ -5,6 +5,7 @@ use App\Http\Controllers\RegistrosController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PerfilPacientesController;
 
 // Ruta para la página de inicio pública (sin autenticación)
 Route::get('/', function () {
@@ -17,9 +18,17 @@ Route::get('/usuarios/create', [RegistrosController::class, 'create'])->name('us
 Route::post('/usuarios', [RegistrosController::class, 'store'])->name('usuarios.store');
 
 // Ruta para el inicio de pacientes, protegida por middleware de autenticación
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/usuarios/inicio-pacientes', [HomeController::class, 'index'])->name('inicio.pacientes');
 });
+
+// Ruta para el perfil de los pacientes
+Route::middleware('auth')->group(function () {
+    Route::get('/usuarios/perfil-pacientes', [PerfilPacientesController::class, 'mostrarPerfil'])
+        ->name('perfil.pacientes');
+});
+
+
 
 // Ruta para el inicio de sesión
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
